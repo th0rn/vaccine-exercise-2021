@@ -1,3 +1,6 @@
+__pycache__/
+env/
+
 /target
 /classes
 /checkouts
