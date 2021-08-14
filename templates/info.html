@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block selector %}
+    <form class="form-inline" action="" method='POST' name="myform">
+        {{ form.csrt_token }}
+        <div class="input-group-prepend">
+          <div class="input-group-text">New search »</div>
+        </div>
+        {{ form.time(class='datepicker') }} {{ form.hidden_tag() }}
+        {{ form.submit() }}
+    <small id="dateHelpBlock" class="form-text text-muted">
+        Enter date or date and time, f.ex.: 2021-04-12T11:10:06.473587Z
+    </small>
+    </form>
+    {% if session['time'].year is defined %}
+    <!-- <p>Data for: {{session['time']}}</p> -->
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+<h3>Vaccination data / {{ session['time'].day }}.{{ session['time'].month}}.{{ session['time'].year }}</h3>
+<table class="table">
+    <small>
+        Data loaded for {{info.total_ampoule_count }} ampoules and {{ info.total_admin_count }}
+        administrations.
+    </small>
+    <tr class="table-active"><th>Daily values</th><td></td></tr>
+    <tr>
+        <td><table class="table">
+                <tr><td>New ampoules arrived</td><th>ampoules</th><th>doses</th></tr>
+               {% for key, value in info.by_man.items() %}
+               <tr>
+                  <th>{{key}}</th>
+                  <td>{{value.ampoules}}</td>
+                  <td>{{value.doses}}</td>
+               </tr>
+               {% endfor %}
+               <tr>
+                       <td>total</td>
+                       <td><strong>{{ info.orders_arrived_on}}</strong></td>
+                       <td><strong>{{ info.vaccines_arrived_on }}</strong></td>
+               </tr>
+        </table></td>
+        <td><strong></strong></td>
+    </tr><tr>
+        <td>New doses administered</td>
+        <td><strong>{{ info.admins_on }} doses</strong></td>
+    </tr><tr>
+        <td>Newly expired ampoules</td>
+        <td><strong>{{ info.expired_on_day }} ampoules</strong></td>
+    </tr>
+    <tr class="table-active"><th>Aggregate totals</th><td></td></tr>
+    <tr>
+        <td>Total unadministered doses expired to date</td>
+        <td><strong>{{ info.total_doses_expired }} doses</strong></td>
+    </tr><tr>
+        <td>Total unexpired doses remaining</td>
+        <td><strong>{{ info.doses_left }} doses</strong></td>
+    </tr><tr>
+        <td>Total doses expiring in the next 10 days</td>
+        <td><strong>{{ info.doses_expiring }} doses</strong></td>
+    </tr>
+</table>
+{% endblock %}

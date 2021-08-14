@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h3>Select a time</h3>
+    <form action="" method='POST' name="myform">
+        {{ form.csrt_token }}
+        <p>Enter date, f.ex.: 2021-04-12T11:10:06.473587Z</p>
+        {{ form.time.label }}{{ form.time(class='datepicker') }} {{ form.hidden_tag() }}
+        <p>
+            {{ form.submit() }}
+        </p>
+    </form>
+{% endblock %}
