@@ -73,6 +73,7 @@ def show_time(year, month, day, hour, minute, sec, microsec):
         'total_doses_expired': core.inv.total_doses_expired(time),
         'total_ampoule_count': core.inv.data_count,
         'total_admin_count': core.adm.data_count,
+        'doses_expiring_by_district': core.inv.doses_expiring_by_district(time),
     }
 
     return render_template('info.html', form=form, info=info)

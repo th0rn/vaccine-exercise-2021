@@ -70,6 +70,17 @@ class Order():
             return 0
         return self.injections - len(self.doses)
 
+    def doses_expiring_by_district(self, time):
+        """Return number of doses expiring in the next 10 days, but by district. """
+        if self.expired(time):
+            return (0, None)
+        # Vaccines were declared to expire 30 days from being received, so 20 days after
+        # begin received they are "about to expire in 10 days", the cutoff given for the
+        # warning.
+        if self.arrived + datetime.timedelta(days=20) > time:
+            return (0, None)
+        return (self.injections - len(self.doses), self.healthcare_district)
+
     def doses_left(self, time):
         """Return the number of (non-expired) doses left from this bottle.
 
@@ -213,6 +224,23 @@ class Inventory():
             expiring += ampoule.doses_expiring(time)
 
         return expiring
+
+    def doses_expiring_by_district(self, time):
+        """Return the amount of doses in all ampoules expiring in the next 10 days, but
+        by district.
+
+        """
+        expiring_by_district = {}
+        for ampoule in self.orders:
+            (doses_expiring, district) = ampoule.doses_expiring_by_district(time)
+            if doses_expiring > 0:
+                if district in expiring_by_district:
+                    expiring_by_district[district] += doses_expiring
+                else:
+                    expiring_by_district[district] = doses_expiring
+
+        print(expiring_by_district)
+        return expiring_by_district
 
 
 inv = Inventory()
