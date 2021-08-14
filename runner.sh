@@ -6,7 +6,7 @@ if [[ ! -f vaccines.py ]]; then
     exit 1
 fi
 
-if ! command -v python 2>/dev/null; then
+if ! command -v python >/dev/null; then
     echo 'You must have python installed and in $PATH to run this.'
     exit 1
 fi
