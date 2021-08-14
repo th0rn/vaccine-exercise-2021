@@ -17,6 +17,9 @@ if [[ ${version} != 'Python 3.9.6' ]]; then
     echo "Your mileage may or may not vary."
 fi
 
+if [[ ! -d env ]]; then
+    python -m venv env
+fi
 source env/bin/activate
 pip install -r requirements.txt
 
