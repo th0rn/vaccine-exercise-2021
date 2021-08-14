@@ -18,7 +18,7 @@ if [[ ${version} != 'Python 3.9.6' ]]; then
 fi
 
 source env/bin/activate
-# pip install -r requirements
+pip install -r requirements.txt
 
 export FLASK_ENV=development
 export FLASK_APP=vaccines
