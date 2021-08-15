@@ -2,8 +2,8 @@
 
 ## Quickstart
 
-* git pull <this project>
-* cd <project root>
+* git pull \<this project>
+* cd \<project root>
 * chmod +x runner.sh
 * ./runner.sh
 
