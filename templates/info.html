@@ -12,17 +12,20 @@
         Enter date or date and time, f.ex.: 2021-04-12T11:10:06.473587Z
     </small>
     </form>
-    {% if session['time'].year is defined %}
-    <!-- <p>Data for: {{session['time']}}</p> -->
-    {% endif %}
 {% endblock %}
 
 {% block content %}
-<h3>Vaccination data / {{ session['time'].day }}.{{ session['time'].month}}.{{ session['time'].year }}</h3>
+<h3>
+    Vaccination data /
+    <a href="{{ info.yesterday }}" class="badge badge-primary">«</a>
+    {{ info.easy_date }}
+    <a href="{{ info.tomorrow }}" class="badge badge-primary">»</a>
+</h3>
+
 <table class="table">
     <small>
-        Data loaded for {{info.total_ampoule_count }} ampoules and {{ info.total_admin_count }}
-        administrations.
+        Data loaded for {{info.total_ampoule_count }} ampoules and {{
+        info.total_admin_count }} administrations.
     </small>
     <tr class="table-active">
         <th>Daily values</th>

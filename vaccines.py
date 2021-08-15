@@ -57,6 +57,8 @@ def show_time(year, month, day, hour, minute, sec, microsec):
         )
 
     time = datetime.datetime(year, month, day, hour, minute, sec, microsec)
+    easy_date = '%s.%s.%s' % (time.day, time.month, time.year)
+    t = time + datetime.timedelta(days=1)
 
     #  administrations = core.load_administrations()
 
@@ -74,6 +76,23 @@ def show_time(year, month, day, hour, minute, sec, microsec):
         'total_ampoule_count': core.inv.data_count,
         'total_admin_count': core.adm.data_count,
         'doses_expiring_by_district': core.inv.doses_expiring_by_district(time),
+        'easy_date': '%s.%s.%s' % (time.day, time.month, time.year),
+        'tomorrow': url_for(
+            'show_time',
+            year=t.year,
+            month=t.month,
+            day=t.day,
+            hour=t.hour,
+            minute=t.minute,
+            sec=t.second,
+            microsec=t.microsecond,
+        ),
     }
+
+    t = time + datetime.timedelta(days=-1)
+    info['yesterday'] = url_for('show_time',
+                                year=t.year, month=t.month, day=t.day, hour=t.hour,
+                                minute=t.minute, sec=t.second, microsec=t.microsecond,
+                                )
 
     return render_template('info.html', form=form, info=info)
