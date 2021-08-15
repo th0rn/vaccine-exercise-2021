@@ -12,7 +12,6 @@ from wtforms import validators, SubmitField
 from wtforms.ext.dateutil.fields import DateTimeField
 from flask_datepicker import datepicker
 
-#  import main
 import core
 
 app = Flask(__name__)
@@ -25,21 +24,14 @@ class InfoForm(FlaskForm):
     submit = SubmitField('Submit')
 
 
-#  datepicker(app)
-
-
 @app.route("/", methods=['GET', 'POST'])
 def index():
-    """Show starting page, with only the search/lookup form. """
-    form = InfoForm()
-    if form.validate_on_submit():
-        session['time'] = form.time.data
-        t = form.time.data
-        return redirect(
-            '/%s/%s/%s/%s/%s/%s/%s' % (t.year, t.month, t.day,
-                                       t.hour, t.minute, t.second, t.microsecond)
-        )
-    return render_template('index.html', form=form)
+    """Redirect to latest order arrival page. """
+    t = core.inv.latest
+    return redirect(
+        '/%s/%s/%s/%s/%s/%s/%s' % (t.year, t.month, t.day,
+                                   t.hour, t.minute, t.second, t.microsecond)
+    )
 
 
 @app.route("/<int:year>/<int:month>/<int:day>/<int:hour>/<int:minute>/<int:sec>/<int:microsec>",

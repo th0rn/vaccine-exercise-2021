@@ -107,6 +107,7 @@ class Inventory():
         """Load order data from resources. """
 
         self.orders = []
+        latest = None
 
         for file in ORDERS_DATA:
             with open(file) as fd:
@@ -115,7 +116,10 @@ class Inventory():
                     order = Order(x.id, x.orderNumber, x.responsiblePerson,
                                   x.healthCareDistrict, x.vaccine, x.injections, x.arrived)
                     self.orders.append(order)
+                    if latest is None or latest < order.arrived:
+                        latest = order.arrived
 
+        self.latest = latest
         self.data_count = len(self.orders)
         print(self.data_count, 'orders loaded.')
 
@@ -157,8 +161,6 @@ class Inventory():
                     orders_arrived += 1
                     doses_arrived += order.injections
 
-            #  orders_by_manufacturer[manufacturer] = (orders_arrived, doses_arrived)
-            #  orders_by_manufacturer[manufacturer] = '%s/%s' % (orders_arrived, doses_arrived)
             orders_by_manufacturer[manufacturer] = {}
             orders_by_manufacturer[manufacturer]['ampoules'] = orders_arrived
             orders_by_manufacturer[manufacturer]['doses'] = doses_arrived
