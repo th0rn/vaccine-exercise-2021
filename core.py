@@ -239,7 +239,6 @@ class Inventory():
                 else:
                     expiring_by_district[district] = doses_expiring
 
-        print(expiring_by_district)
         return expiring_by_district
 
 
