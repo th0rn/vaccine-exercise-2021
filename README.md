@@ -7,6 +7,10 @@
 * chmod +x runner.sh
 * ./runner.sh
 
+### Running tests
+
+* python -m unittest tests/test_core.py
+
 ## Technology chosen
 
 ### Frontend
