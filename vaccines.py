@@ -76,7 +76,7 @@ def show_time(year, month, day, hour, minute, sec, microsec):
         'total_ampoule_count': core.inv.data_count,
         'total_admin_count': core.adm.data_count,
         'doses_expiring_by_district': core.inv.doses_expiring_by_district(time),
-        'easy_date': '%s.%s.%s' % (time.day, time.month, time.year),
+        'easy_date': '%s.%s.%s' % (time.day, time.month, str(time.year)[2:]),
         'tomorrow': url_for(
             'show_time',
             year=t.year,
